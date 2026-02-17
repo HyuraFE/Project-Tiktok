@@ -29,7 +29,7 @@ const api = axios.create({
 
 export const downloadTikTokVideo = async (url) => {
     try {
-        const response = await api.post('/tiktok/download', { url });
+        const response = await api.post('/tiktok-download', { url });
         return response.data;
     } catch (error) {
         throw error.response?.data || { error: 'Network Error', message: 'Failed to connect to server' };

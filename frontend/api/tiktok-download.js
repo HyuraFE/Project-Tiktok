@@ -1,6 +1,6 @@
-import axios from 'axios';
+const axios = require('axios');
 
-export default async function handler(req, res) {
+module.exports = async function handler(req, res) {
     // Enable CORS
     res.setHeader('Access-Control-Allow-Credentials', true);
     res.setHeader('Access-Control-Allow-Origin', '*');
@@ -39,8 +39,16 @@ export default async function handler(req, res) {
         }
 
         console.log('Fetching TikTok video:', url);
-        console.log('Using API Key:', process.env.RAPIDAPI_KEY?.substring(0, 10) + '...');
-        console.log('Using Host:', process.env.RAPIDAPI_HOST);
+        console.log('API Key exists:', !!process.env.RAPIDAPI_KEY);
+        console.log('API Host:', process.env.RAPIDAPI_HOST);
+
+        // Check if environment variables are set
+        if (!process.env.RAPIDAPI_KEY || !process.env.RAPIDAPI_HOST) {
+            return res.status(500).json({
+                error: 'Configuration Error',
+                message: 'API credentials not configured. Please set RAPIDAPI_KEY and RAPIDAPI_HOST in Vercel environment variables.'
+            });
+        }
 
         // Call RapidAPI
         const options = {
@@ -53,7 +61,8 @@ export default async function handler(req, res) {
             headers: {
                 'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
                 'X-RapidAPI-Host': process.env.RAPIDAPI_HOST
-            }
+            },
+            timeout: 10000
         };
 
         const response = await axios.request(options);
@@ -90,9 +99,10 @@ export default async function handler(req, res) {
 
     } catch (error) {
         console.error('Error downloading TikTok video:', error.message);
-        console.error('Error details:', error.response?.data);
+        console.error('Error stack:', error.stack);
 
         if (error.response) {
+            console.error('API Error details:', error.response.data);
             return res.status(error.response.status).json({
                 error: 'API Error',
                 message: error.response.data?.message || error.response.data?.error || 'Failed to fetch video data from TikTok',
@@ -102,7 +112,8 @@ export default async function handler(req, res) {
 
         res.status(500).json({
             error: 'Server Error',
-            message: 'An error occurred while processing your request'
+            message: error.message || 'An error occurred while processing your request',
+            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
         });
     }
-}
+};

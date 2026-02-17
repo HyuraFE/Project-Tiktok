@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TikTok Downloader - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#a413ec",
+                        "background-light": "#f7f6f8",
+                        "background-dark": "#120a16",
+                    },
+                    fontFamily: {
+                        "display": ["Plus Jakarta Sans"]
+                    },
+                    borderRadius: {
+                        "DEFAULT": "1rem",
+                        "lg": "2rem",
+                        "xl": "3rem",
+                        "full": "9999px"
+                    },
+                },
+            },
+        }
+    </script>
+<style>
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+        }
+        .glass-effect {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-white min-h-screen flex flex-col">
+<!-- Top Navigation Bar (iOS Style) -->
+<header class="flex items-center justify-between px-6 pt-12 pb-4 sticky top-0 bg-background-light/80 dark:bg-background-dark/80 backdrop-blur-md z-50">
+<div class="flex items-center gap-2">
+<div class="bg-primary p-1.5 rounded-lg flex items-center justify-center">
+<span class="material-symbols-outlined text-white text-xl">movie</span>
+</div>
+<span class="font-bold text-lg tracking-tight">TikSave</span>
+</div>
+<button class="w-10 h-10 flex items-center justify-center rounded-full bg-primary/10 text-primary">
+<span class="material-symbols-outlined">person</span>
+</button>
+</header>
+<main class="flex-1 flex flex-col px-6 justify-center max-w-md mx-auto w-full -mt-16">
+<!-- Hero Section -->
+<div class="text-center space-y-4 mb-10">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-2">
+<span class="material-symbols-outlined text-sm">verified</span>
+                NO WATERMARK • HD QUALITY
+            </div>
+<h1 class="text-4xl font-bold leading-tight tracking-tight">
+                Download TikTok <br/>
+<span class="text-primary">Videos Instantly</span>
+</h1>
+<p class="text-slate-500 dark:text-slate-400 text-sm px-4">
+                Paste your favorite TikTok link below and save high-quality videos without the watermark.
+            </p>
+</div>
+<!-- Input Area -->
+<div class="space-y-4">
+<div class="relative group">
+<div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+<span class="material-symbols-outlined">link</span>
+</div>
+<input class="w-full h-16 pl-12 pr-4 bg-slate-100 dark:bg-white/5 border-none rounded-2xl focus:ring-2 focus:ring-primary text-base placeholder:text-slate-500 dark:placeholder:text-slate-500 transition-all shadow-inner" placeholder="Paste TikTok link here..." type="text"/>
+</div>
+<button class="w-full h-16 bg-primary hover:bg-primary/90 text-white font-bold text-lg rounded-2xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 transition-transform active:scale-95">
+<span class="material-symbols-outlined">download</span>
+                Download Now
+            </button>
+</div>
+<!-- Quick Stats / Features -->
+<div class="grid grid-cols-3 gap-4 mt-12">
+<div class="flex flex-col items-center text-center space-y-2">
+<div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-primary">bolt</span>
+</div>
+<span class="text-[10px] font-medium text-slate-400 uppercase tracking-widest">Fast</span>
+</div>
+<div class="flex flex-col items-center text-center space-y-2">
+<div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-primary">high_quality</span>
+</div>
+<span class="text-[10px] font-medium text-slate-400 uppercase tracking-widest">HD Only</span>
+</div>
+<div class="flex flex-col items-center text-center space-y-2">
+<div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center border border-white/5">
+<span class="material-symbols-outlined text-primary">lock</span>
+</div>
+<span class="text-[10px] font-medium text-slate-400 uppercase tracking-widest">Secure</span>
+</div>
+</div>
+</main>
+<!-- Ad/Promo Card (Subtle) -->
+<div class="px-6 mb-8">
+<div class="w-full p-4 rounded-2xl bg-gradient-to-r from-primary/20 to-transparent border border-primary/10 flex items-center justify-between">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">stars</span>
+<div>
+<p class="text-sm font-bold">Go Premium</p>
+<p class="text-xs text-slate-400">Unlimited batch downloads</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-slate-500">chevron_right</span>
+</div>
+</div>
+<!-- Bottom Navigation Bar -->
+<nav class="pb-10 pt-3 border-t border-slate-200 dark:border-white/5 bg-background-light dark:bg-[#1c1022]">
+<div class="flex justify-around items-center px-4">
+<a class="flex flex-col items-center gap-1 text-primary" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1">home</span>
+<span class="text-[10px] font-semibold">Home</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="text-[10px] font-semibold">History</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">bookmark</span>
+<span class="text-[10px] font-semibold">Saved</span>
+</a>
+<a class="flex flex-col items-center gap-1 text-slate-500 hover:text-primary transition-colors" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-semibold">Settings</span>
+</a>
+</div>
+</nav>
+</body></html>

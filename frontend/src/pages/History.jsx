@@ -51,7 +51,7 @@ export default function History() {
     };
 
     return (
-        <div className="min-h-screen bg-dark flex flex-col">
+        <div className="min-h-screen bg-background-light dark:bg-background-dark flex flex-col">
             <Header showBack={false} />
 
             <main className="flex-1 px-4 py-6 pb-24">

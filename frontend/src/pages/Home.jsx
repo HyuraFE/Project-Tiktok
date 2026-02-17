@@ -20,16 +20,23 @@ export default function Home() {
         setError('');
 
         try {
-            const response = await downloadTikTokVideo(url);
+            const data = await downloadTikTokVideo(url);
+            console.log('Video data received:', data);
 
-            if (response.success) {
-                // Navigate to preview page with video data
-                navigate('/preview', { state: { videoData: response.data } });
+            if (data.success) {
+                // Navigate to preview with video data and URL
+                navigate('/preview', {
+                    state: {
+                        videoData: data.data,
+                        url: url
+                    }
+                });
             } else {
-                setError('Failed to fetch video data');
+                setError(data.message || 'Failed to fetch video data');
             }
         } catch (err) {
-            setError(err.message || 'An error occurred. Please try again.');
+            console.error('Download error:', err);
+            setError(err.message || 'Failed to download video. Please check the URL and try again.');
         } finally {
             setLoading(false);
         }

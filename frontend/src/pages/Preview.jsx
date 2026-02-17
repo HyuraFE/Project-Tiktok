@@ -1,11 +1,23 @@
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { historyStorage } from '../utils/historyStorage';
 
 export default function Preview() {
     const location = useLocation();
     const navigate = useNavigate();
     const videoData = location.state?.videoData;
+    const videoUrl = location.state?.url;
     const [downloading, setDownloading] = useState(false);
+
+    // Save to history when component mounts
+    useEffect(() => {
+        if (videoData && videoUrl) {
+            historyStorage.addToHistory({
+                url: videoUrl,
+                data: videoData
+            });
+        }
+    }, [videoData, videoUrl]);
 
     if (!videoData) {
         return (

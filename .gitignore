@@ -13,7 +13,7 @@ yarn-error.log*
 dist/
 build/
 *.local
-
+.impeccable/
 # IDE
 .vscode/
 .idea/

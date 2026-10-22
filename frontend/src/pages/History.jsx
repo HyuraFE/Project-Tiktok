@@ -65,7 +65,7 @@ export default function History() {
                         {history.length > 0 && (
                             <button
                                 onClick={() => setShowClearConfirm(true)}
-                                className="px-4 py-2 bg-dark-lighter rounded-xl text-red-400 hover:bg-red-500/10 transition-colors text-sm font-medium"
+                                className="px-4 py-2 bg-white/5 rounded-xl text-red-400 hover:bg-red-500/10 transition-colors text-sm font-medium"
                             >
                                 Clear All
                             </button>
@@ -74,14 +74,14 @@ export default function History() {
 
                     {/* Clear Confirmation Modal */}
                     {showClearConfirm && (
-                        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-                            <div className="bg-dark-lighter rounded-2xl p-6 max-w-sm w-full border border-white/10">
+                        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 px-4">
+                            <div className="bg-[#1c1022] rounded-2xl p-6 max-w-sm w-full border border-white/10 shadow-2xl">
                                 <h3 className="text-xl font-bold text-white mb-2">Clear History?</h3>
                                 <p className="text-gray-400 mb-6">This will permanently delete all {history.length} items from your history.</p>
                                 <div className="flex gap-3">
                                     <button
                                         onClick={() => setShowClearConfirm(false)}
-                                        className="flex-1 px-4 py-3 bg-dark rounded-xl text-white hover:bg-dark/80 transition-colors font-medium"
+                                        className="flex-1 px-4 py-3 bg-white/10 rounded-xl text-white hover:bg-white/15 transition-colors font-medium"
                                     >
                                         Cancel
                                     </button>
@@ -99,8 +99,8 @@ export default function History() {
                     {/* History List */}
                     {history.length === 0 ? (
                         <div className="text-center py-16">
-                            <div className="w-20 h-20 bg-dark-lighter rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span className="material-symbols-rounded text-4xl text-gray-600">history</span>
+                            <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
+                                <span className="material-symbols-outlined text-4xl text-gray-500">history</span>
                             </div>
                             <h3 className="text-xl font-bold text-white mb-2">No History Yet</h3>
                             <p className="text-gray-400 mb-6">Your download history will appear here</p>
@@ -116,11 +116,11 @@ export default function History() {
                             {history.map((item) => (
                                 <div
                                     key={item.id}
-                                    className="bg-dark-lighter rounded-2xl p-4 border border-white/5 hover:border-primary/30 transition-all group"
+                                    className="bg-white/5 rounded-2xl p-4 border border-white/5 hover:border-primary/30 transition-all group"
                                 >
                                     <div className="flex gap-4">
                                         {/* Thumbnail */}
-                                        <div className="relative w-24 h-32 flex-shrink-0 rounded-xl overflow-hidden bg-dark">
+                                        <div className="relative w-24 h-32 flex-shrink-0 rounded-xl overflow-hidden bg-white/5">
                                             {item.thumbnail ? (
                                                 <img
                                                     src={item.thumbnail}
@@ -129,7 +129,7 @@ export default function History() {
                                                 />
                                             ) : (
                                                 <div className="w-full h-full flex items-center justify-center">
-                                                    <span className="material-symbols-rounded text-gray-600 text-3xl">video_library</span>
+                                                    <span className="material-symbols-outlined text-gray-500 text-3xl">video_library</span>
                                                 </div>
                                             )}
                                         </div>
@@ -149,13 +149,13 @@ export default function History() {
                                                 <span className="text-gray-400 text-sm">@{item.author.username}</span>
                                             </div>
 
-                                            <div className="flex items-center gap-4 text-xs text-gray-500 mb-3">
+                                            <div className="flex items-center gap-4 text-xs text-gray-400 mb-3">
                                                 <span className="flex items-center gap-1">
-                                                    <span className="material-symbols-rounded text-sm">visibility</span>
+                                                    <span className="material-symbols-outlined text-sm">visibility</span>
                                                     {formatNumber(item.stats.plays)}
                                                 </span>
                                                 <span className="flex items-center gap-1">
-                                                    <span className="material-symbols-rounded text-sm">favorite</span>
+                                                    <span className="material-symbols-outlined text-sm">favorite</span>
                                                     {formatNumber(item.stats.likes)}
                                                 </span>
                                                 <span>{formatDate(item.timestamp)}</span>
@@ -165,7 +165,7 @@ export default function History() {
                                                 onClick={() => handleDelete(item.id)}
                                                 className="text-red-400 hover:text-red-300 text-sm font-medium flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
                                             >
-                                                <span className="material-symbols-rounded text-sm">delete</span>
+                                                <span className="material-symbols-outlined text-sm">delete</span>
                                                 Remove
                                             </button>
                                         </div>

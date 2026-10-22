@@ -13,7 +13,8 @@ export default {
                 "background-dark": "#120a16",
             },
             fontFamily: {
-                "display": ["Plus Jakarta Sans", "sans-serif"]
+                sans: ["DM Sans", "sans-serif"],
+                display: ["Syne", "sans-serif"]
             },
             borderRadius: {
                 "DEFAULT": "1rem",

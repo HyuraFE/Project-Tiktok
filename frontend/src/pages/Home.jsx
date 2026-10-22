@@ -10,9 +10,24 @@ export default function Home() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    const handlePaste = async () => {
+        try {
+            const text = await navigator.clipboard.readText();
+            setUrl(text);
+            setError('');
+        } catch {
+            setError('Clipboard access blocked. Paste link manually.');
+        }
+    };
+
     const handleDownload = async () => {
-        if (!url.trim()) {
-            setError('Please paste a TikTok URL');
+        const trimmedUrl = url.trim();
+        if (!trimmedUrl) {
+            setError('Paste a TikTok URL first');
+            return;
+        }
+        if (!/^https?:\/\/(?:www\.)?(?:tiktok\.com|vm\.tiktok\.com|vt\.tiktok\.com)\//i.test(trimmedUrl)) {
+            setError('Enter a valid TikTok URL');
             return;
         }
 
@@ -59,12 +74,12 @@ export default function Home() {
                         <span className="material-symbols-outlined text-sm">verified</span>
                         NO WATERMARK • HD QUALITY
                     </div>
-                    <h1 className="text-4xl font-bold leading-tight tracking-tight">
+                    <h1 className="text-4xl font-extrabold leading-tight tracking-tight font-display">
                         Download TikTok <br />
                         <span className="text-primary">Videos Instantly</span>
                     </h1>
                     <p className="text-slate-500 dark:text-slate-400 text-sm px-4">
-                        Paste your favorite TikTok link below and save high-quality videos without the watermark.
+                        Save TikTok videos in original HD quality without watermarks.
                     </p>
                 </div>
 
@@ -75,7 +90,7 @@ export default function Home() {
                             <span className="material-symbols-outlined">link</span>
                         </div>
                         <input
-                            className="w-full h-16 pl-12 pr-4 bg-slate-100 dark:bg-white/5 border-none rounded-2xl focus:ring-2 focus:ring-primary text-base placeholder:text-slate-500 dark:placeholder:text-slate-500 transition-all shadow-inner"
+                            className="w-full h-16 pl-12 pr-16 bg-slate-100 dark:bg-white/5 border-none rounded-2xl focus:ring-2 focus:ring-primary text-base placeholder:text-slate-500 dark:placeholder:text-slate-500 transition-all shadow-inner"
                             placeholder="Paste TikTok link here..."
                             type="text"
                             value={url}
@@ -83,6 +98,15 @@ export default function Home() {
                             onKeyPress={handleKeyPress}
                             disabled={loading}
                         />
+                        <button
+                            type="button"
+                            onClick={handlePaste}
+                            disabled={loading}
+                            className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            aria-label="Paste from clipboard"
+                        >
+                            <span className="material-symbols-outlined text-lg">content_paste</span>
+                        </button>
                     </div>
 
                     {error && (
@@ -109,43 +133,7 @@ export default function Home() {
                         )}
                     </button>
                 </div>
-
-                {/* Quick Stats / Features */}
-                <div className="grid grid-cols-3 gap-4 mt-12">
-                    <div className="flex flex-col items-center text-center space-y-2">
-                        <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center border border-white/5">
-                            <span className="material-symbols-outlined text-primary">bolt</span>
-                        </div>
-                        <span className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">Fast</span>
-                    </div>
-                    <div className="flex flex-col items-center text-center space-y-2">
-                        <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center border border-white/5">
-                            <span className="material-symbols-outlined text-primary">high_quality</span>
-                        </div>
-                        <span className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">HD Only</span>
-                    </div>
-                    <div className="flex flex-col items-center text-center space-y-2">
-                        <div className="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center border border-white/5">
-                            <span className="material-symbols-outlined text-primary">lock</span>
-                        </div>
-                        <span className="text-[10px] font-medium text-slate-400 uppercase tracking-widest">Secure</span>
-                    </div>
-                </div>
             </main>
-
-            {/* Ad/Promo Card */}
-            <div className="px-6 mb-8">
-                <div className="w-full p-4 rounded-2xl bg-gradient-to-r from-primary/20 to-transparent border border-primary/10 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                        <span className="material-symbols-outlined text-primary">stars</span>
-                        <div>
-                            <p className="text-sm font-bold">Go Premium</p>
-                            <p className="text-xs text-slate-400">Unlimited batch downloads</p>
-                        </div>
-                    </div>
-                    <span className="material-symbols-outlined text-slate-500">chevron_right</span>
-                </div>
-            </div>
 
             <BottomNav />
         </div>

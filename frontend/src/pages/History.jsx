@@ -13,10 +13,7 @@ export default function History() {
         loadHistory();
     }, []);
 
-    const loadHistory = () => {
-        const items = historyStorage.getHistory();
-        setHistory(items);
-    };
+    const loadHistory = () => setHistory(historyStorage.getHistory());
 
     const handleDelete = (id) => {
         historyStorage.removeFromHistory(id);
@@ -31,8 +28,7 @@ export default function History() {
 
     const formatDate = (timestamp) => {
         const date = new Date(timestamp);
-        const now = new Date();
-        const diff = now - date;
+        const diff = new Date() - date;
         const minutes = Math.floor(diff / 60000);
         const hours = Math.floor(diff / 3600000);
         const days = Math.floor(diff / 86400000);
@@ -45,132 +41,93 @@ export default function History() {
     };
 
     const formatNumber = (num) => {
-        if (num >= 1000000) return (num / 1000000).toFixed(1) + 'M';
-        if (num >= 1000) return (num / 1000).toFixed(1) + 'K';
+        if (num >= 1000000) return `${(num / 1000000).toFixed(1)}M`;
+        if (num >= 1000) return `${(num / 1000).toFixed(1)}K`;
         return num?.toString() || '0';
     };
 
     return (
-        <div className="min-h-screen bg-background-light dark:bg-background-dark flex flex-col">
+        <div className="min-h-screen bg-background text-neutral-100 flex flex-col">
             <Header showBack={false} />
 
-            <main className="flex-1 px-4 py-6 pb-24">
+            <main className="flex-1 px-6 py-8 pb-24">
                 <div className="max-w-2xl mx-auto">
-                    {/* Header */}
-                    <div className="flex items-center justify-between mb-6">
+                    <div className="flex items-end justify-between mb-8">
                         <div>
-                            <h1 className="text-2xl font-bold text-white mb-1">Download History</h1>
-                            <p className="text-gray-400 text-sm">{history.length} videos</p>
+                            <h1 className="text-3xl font-bold tracking-tight text-white">Download History</h1>
+                            <p className="text-neutral-500 text-sm mt-1">{history.length} {history.length === 1 ? 'video' : 'videos'}</p>
                         </div>
                         {history.length > 0 && (
                             <button
                                 onClick={() => setShowClearConfirm(true)}
-                                className="px-4 py-2 bg-white/5 rounded-xl text-red-400 hover:bg-red-500/10 transition-colors text-sm font-medium"
+                                className="px-3 py-2 border border-border rounded-lg text-neutral-400 hover:text-white hover:bg-surface transition-colors text-xs font-medium"
                             >
-                                Clear All
+                                Clear all
                             </button>
                         )}
                     </div>
 
-                    {/* Clear Confirmation Modal */}
                     {showClearConfirm && (
-                        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 px-4">
-                            <div className="bg-[#1c1022] rounded-2xl p-6 max-w-sm w-full border border-white/10 shadow-2xl">
-                                <h3 className="text-xl font-bold text-white mb-2">Clear History?</h3>
-                                <p className="text-gray-400 mb-6">This will permanently delete all {history.length} items from your history.</p>
+                        <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50 px-6" role="dialog" aria-modal="true" aria-labelledby="clear-history-title">
+                            <div className="bg-surface rounded-2xl p-6 max-w-sm w-full border border-border shadow-2xl">
+                                <h3 id="clear-history-title" className="text-xl font-bold text-white mb-2">Clear history?</h3>
+                                <p className="text-neutral-400 text-sm mb-6">This permanently deletes all {history.length} saved items from this device.</p>
                                 <div className="flex gap-3">
-                                    <button
-                                        onClick={() => setShowClearConfirm(false)}
-                                        className="flex-1 px-4 py-3 bg-white/10 rounded-xl text-white hover:bg-white/15 transition-colors font-medium"
-                                    >
+                                    <button onClick={() => setShowClearConfirm(false)} className="flex-1 px-4 py-3 bg-neutral-800 rounded-xl text-white hover:bg-neutral-700 transition-colors font-medium">
                                         Cancel
                                     </button>
-                                    <button
-                                        onClick={handleClearAll}
-                                        className="flex-1 px-4 py-3 bg-red-500 rounded-xl text-white hover:bg-red-600 transition-colors font-medium"
-                                    >
-                                        Clear All
+                                    <button onClick={handleClearAll} className="flex-1 px-4 py-3 bg-white rounded-xl text-black hover:bg-neutral-200 transition-colors font-medium">
+                                        Clear all
                                     </button>
                                 </div>
                             </div>
                         </div>
                     )}
 
-                    {/* History List */}
                     {history.length === 0 ? (
-                        <div className="text-center py-16">
-                            <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-4">
-                                <span className="material-symbols-outlined text-4xl text-gray-500">history</span>
+                        <div className="text-center py-20 border-y border-border-subtle">
+                            <div className="w-14 h-14 bg-surface border border-border rounded-full flex items-center justify-center mx-auto mb-5">
+                                <span className="material-symbols-outlined text-2xl text-neutral-500">history</span>
                             </div>
-                            <h3 className="text-xl font-bold text-white mb-2">No History Yet</h3>
-                            <p className="text-gray-400 mb-6">Your download history will appear here</p>
-                            <button
-                                onClick={() => navigate('/')}
-                                className="px-6 py-3 bg-primary rounded-xl text-white font-medium hover:bg-primary/90 transition-colors"
-                            >
-                                Download Your First Video
+                            <h3 className="text-xl font-bold text-white mb-2">No downloads yet</h3>
+                            <p className="text-neutral-500 text-sm mb-6">Downloaded videos appear here.</p>
+                            <button onClick={() => navigate('/')} className="px-5 py-3 bg-white rounded-xl text-black text-sm font-semibold hover:bg-neutral-200 transition-colors">
+                                Download video
                             </button>
                         </div>
                     ) : (
-                        <div className="space-y-3">
+                        <div className="divide-y divide-border">
                             {history.map((item) => (
-                                <div
-                                    key={item.id}
-                                    className="bg-white/5 rounded-2xl p-4 border border-white/5 hover:border-primary/30 transition-all group"
-                                >
+                                <article key={item.id} className="py-4 first:pt-0 group">
                                     <div className="flex gap-4">
-                                        {/* Thumbnail */}
-                                        <div className="relative w-24 h-32 flex-shrink-0 rounded-xl overflow-hidden bg-white/5">
+                                        <div className="relative w-20 h-28 flex-shrink-0 rounded-lg overflow-hidden bg-surface border border-border">
                                             {item.thumbnail ? (
-                                                <img
-                                                    src={item.thumbnail}
-                                                    alt="Video thumbnail"
-                                                    className="w-full h-full object-cover"
-                                                />
+                                                <img src={item.thumbnail} alt="Video thumbnail" className="w-full h-full object-cover" />
                                             ) : (
                                                 <div className="w-full h-full flex items-center justify-center">
-                                                    <span className="material-symbols-outlined text-gray-500 text-3xl">video_library</span>
+                                                    <span className="material-symbols-outlined text-neutral-600 text-2xl">video_library</span>
                                                 </div>
                                             )}
                                         </div>
 
-                                        {/* Info */}
-                                        <div className="flex-1 min-w-0">
-                                            <p className="text-white font-medium mb-2 line-clamp-2">{item.description}</p>
-
-                                            <div className="flex items-center gap-2 mb-3">
-                                                {item.author.avatar && (
-                                                    <img
-                                                        src={item.author.avatar}
-                                                        alt={item.author.username}
-                                                        className="w-5 h-5 rounded-full"
-                                                    />
-                                                )}
-                                                <span className="text-gray-400 text-sm">@{item.author.username}</span>
+                                        <div className="flex-1 min-w-0 py-0.5">
+                                            <p className="text-white font-medium text-sm leading-relaxed line-clamp-2">{item.description || 'TikTok video'}</p>
+                                            <div className="flex items-center gap-2 mt-2">
+                                                {item.author?.avatar && <img src={item.author.avatar} alt="" className="w-4 h-4 rounded-full grayscale" />}
+                                                <span className="text-neutral-500 text-xs">@{item.author?.username || 'creator'}</span>
                                             </div>
-
-                                            <div className="flex items-center gap-4 text-xs text-gray-400 mb-3">
-                                                <span className="flex items-center gap-1">
-                                                    <span className="material-symbols-outlined text-sm">visibility</span>
-                                                    {formatNumber(item.stats.plays)}
-                                                </span>
-                                                <span className="flex items-center gap-1">
-                                                    <span className="material-symbols-outlined text-sm">favorite</span>
-                                                    {formatNumber(item.stats.likes)}
-                                                </span>
+                                            <div className="flex items-center gap-3 text-xs text-neutral-500 mt-3">
+                                                <span className="flex items-center gap-1"><span className="material-symbols-outlined text-xs">visibility</span>{formatNumber(item.stats?.plays)}</span>
+                                                <span className="flex items-center gap-1"><span className="material-symbols-outlined text-xs">favorite</span>{formatNumber(item.stats?.likes)}</span>
                                                 <span>{formatDate(item.timestamp)}</span>
                                             </div>
-
-                                            <button
-                                                onClick={() => handleDelete(item.id)}
-                                                className="text-red-400 hover:text-red-300 text-sm font-medium flex items-center gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
-                                            >
+                                            <button onClick={() => handleDelete(item.id)} className="mt-3 text-neutral-500 hover:text-white text-xs font-medium flex items-center gap-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100 transition-opacity">
                                                 <span className="material-symbols-outlined text-sm">delete</span>
                                                 Remove
                                             </button>
                                         </div>
                                     </div>
-                                </div>
+                                </article>
                             ))}
                         </div>
                     )}

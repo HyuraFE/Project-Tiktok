@@ -8,19 +8,18 @@ export default {
     theme: {
         extend: {
             colors: {
-                "primary": "#a413ec",
-                "background-light": "#f7f6f8",
-                "background-dark": "#120a16",
+                primary: "#ffffff",
+                "primary-foreground": "#000000",
+                background: "#080808",
+                surface: "#121212",
+                "surface-hover": "#1a1a1a",
+                border: "#262626",
+                "border-subtle": "#1a1a1a",
+                muted: "#888888",
             },
             fontFamily: {
                 sans: ["DM Sans", "sans-serif"],
                 display: ["Syne", "sans-serif"]
-            },
-            borderRadius: {
-                "DEFAULT": "1rem",
-                "lg": "2rem",
-                "xl": "3rem",
-                "full": "9999px"
             },
         },
     },

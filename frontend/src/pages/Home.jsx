@@ -67,18 +67,18 @@ export default function Home() {
         <div className="min-h-screen flex flex-col">
             <Header />
 
-            <main className="flex-1 flex flex-col px-6 justify-center max-w-md mx-auto w-full -mt-16">
+            <main className="flex-1 flex flex-col px-6 justify-center max-w-md mx-auto w-full -mt-12">
                 {/* Hero Section */}
                 <div className="text-center space-y-4 mb-10">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary text-xs font-semibold mb-2">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-border text-neutral-300 text-xs font-semibold mb-2">
                         <span className="material-symbols-outlined text-sm">verified</span>
                         NO WATERMARK • HD QUALITY
                     </div>
-                    <h1 className="text-4xl font-extrabold leading-tight tracking-tight font-display">
+                    <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight tracking-tight font-display text-white">
                         Download TikTok <br />
-                        <span className="text-primary">Videos Instantly</span>
+                        <span className="font-normal">Videos Instantly</span>
                     </h1>
-                    <p className="text-slate-500 dark:text-slate-400 text-sm px-4">
+                    <p className="text-neutral-500 text-sm px-4 max-w-xs mx-auto">
                         Save TikTok videos in original HD quality without watermarks.
                     </p>
                 </div>
@@ -86,11 +86,11 @@ export default function Home() {
                 {/* Input Area */}
                 <div className="space-y-4">
                     <div className="relative group">
-                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-slate-400 group-focus-within:text-primary transition-colors">
+                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-neutral-600 group-focus-within:text-white transition-colors">
                             <span className="material-symbols-outlined">link</span>
                         </div>
                         <input
-                            className="w-full h-16 pl-12 pr-16 bg-slate-100 dark:bg-white/5 border-none rounded-2xl focus:ring-2 focus:ring-primary text-base placeholder:text-slate-500 dark:placeholder:text-slate-500 transition-all shadow-inner"
+                            className="w-full h-16 pl-12 pr-16 bg-surface border border-border rounded-2xl focus:ring-2 focus:ring-white focus:border-transparent text-base placeholder:text-neutral-500 transition-all"
                             placeholder="Paste TikTok link here..."
                             type="text"
                             value={url}
@@ -102,7 +102,7 @@ export default function Home() {
                             type="button"
                             onClick={handlePaste}
                             disabled={loading}
-                            className="absolute inset-y-0 right-0 pr-4 flex items-center text-slate-400 hover:text-primary transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                            className="absolute inset-y-0 right-0 pr-4 flex items-center text-neutral-600 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                             aria-label="Paste from clipboard"
                         >
                             <span className="material-symbols-outlined text-lg">content_paste</span>
@@ -110,13 +110,14 @@ export default function Home() {
                     </div>
 
                     {error && (
-                        <div className="text-red-500 text-sm text-center bg-red-500/10 py-2 px-4 rounded-lg">
+                        <div className="text-neutral-400 text-sm text-center bg-neutral-900/50 border border-border py-2 px-4 rounded-lg flex items-center justify-center gap-2">
+                            <span className="material-symbols-outlined text-base">error_outline</span>
                             {error}
                         </div>
                     )}
 
                     <button
-                        className="w-full h-16 bg-primary hover:bg-primary/90 text-white font-bold text-lg rounded-2xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 transition-transform active:scale-95 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full h-16 bg-white text-black font-bold text-lg rounded-2xl flex items-center justify-center gap-2 transition-transform active:scale-95 hover:bg-neutral-200 disabled:opacity-50 disabled:cursor-not-allowed"
                         onClick={handleDownload}
                         disabled={loading}
                     >

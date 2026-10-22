@@ -32,3 +32,6 @@ logs/
 # Testing
 coverage/
 .nyc_output/
+
+DESIGN.md
+PRODUCT.md

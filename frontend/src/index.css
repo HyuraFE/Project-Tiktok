@@ -2,21 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  color-scheme: dark;
+}
+
 body {
   font-family: 'DM Sans', sans-serif;
   min-height: 100dvh;
+  background-color: #080808;
+  color: #ededed;
+  -webkit-font-smoothing: antialiased;
 }
 
-.glass-effect {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-}
-
-.glass-card {
-  background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+::selection {
+  background: #ffffff;
+  color: #000000;
 }
 
 /* Material Symbols filled variant */

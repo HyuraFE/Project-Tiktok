@@ -38,60 +38,59 @@ module.exports = async function handler(req, res) {
             });
         }
 
-        console.log('Fetching TikTok video:', url);
-        console.log('API Key exists:', !!process.env.RAPIDAPI_KEY);
-        console.log('API Host:', process.env.RAPIDAPI_HOST);
+        console.log('Fetching TikTok video via TikWM (Frontend Serverless):', url);
 
-        // Check if environment variables are set
-        if (!process.env.RAPIDAPI_KEY || !process.env.RAPIDAPI_HOST) {
-            return res.status(500).json({
-                error: 'Configuration Error',
-                message: 'API credentials not configured. Please set RAPIDAPI_KEY and RAPIDAPI_HOST in Vercel environment variables.'
+        // Call TikWM Public API
+        const params = new URLSearchParams();
+        params.append('url', url);
+        params.append('hd', '1');
+
+        const response = await axios.post(
+            'https://www.tikwm.com/api/',
+            params.toString(),
+            {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded'
+                },
+                timeout: 15000
+            }
+        );
+
+        if (response.data?.code !== 0) {
+            return res.status(400).json({
+                error: 'Fetch Failed',
+                message: response.data?.msg || 'Failed to parse TikTok video from URL'
             });
         }
 
-        // Call RapidAPI
-        const options = {
-            method: 'GET',
-            url: 'https://tiktok-video-no-watermark2.p.rapidapi.com/',
-            params: {
-                url: url,
-                hd: '1'
-            },
-            headers: {
-                'X-RapidAPI-Key': process.env.RAPIDAPI_KEY,
-                'X-RapidAPI-Host': process.env.RAPIDAPI_HOST
-            },
-            timeout: 10000
-        };
-
-        const response = await axios.request(options);
-        console.log('API Response received');
-
-        // Format response based on the actual API structure
-        const apiData = response.data?.data || response.data;
+        const apiData = response.data?.data || {};
 
         const videoData = {
             success: true,
             data: {
                 video: {
-                    noWatermark: apiData?.play || apiData?.hdplay || apiData?.wmplay || null,
-                    watermark: apiData?.wmplay || apiData?.play || null,
-                    thumbnail: apiData?.cover || apiData?.origin_cover || null,
+                    noWatermark: apiData.hdplay || apiData.play || null,
+                    watermark: apiData.wmplay || apiData.play || null,
+                    thumbnail: apiData.cover || apiData.origin_cover || null,
+                    duration: apiData.duration || 0
                 },
-                music: apiData?.music || apiData?.music_info?.play || null,
+                music: apiData.music || apiData.music_info?.play || null,
+                music_info: {
+                    title: apiData.music_info?.title || 'Original Sound',
+                    author: apiData.music_info?.author || 'Unknown'
+                },
                 author: {
-                    username: apiData?.author?.unique_id || apiData?.author?.nickname || 'Unknown',
-                    nickname: apiData?.author?.nickname || apiData?.author?.unique_id || 'Unknown',
-                    avatar: apiData?.author?.avatar || apiData?.author?.avatar_thumb || null,
+                    username: apiData.author?.unique_id || 'Unknown',
+                    nickname: apiData.author?.nickname || apiData.author?.unique_id || 'Unknown',
+                    avatar: apiData.author?.avatar || null,
                 },
                 stats: {
-                    plays: apiData?.play_count || apiData?.statistics?.play_count || 0,
-                    likes: apiData?.digg_count || apiData?.statistics?.digg_count || 0,
-                    comments: apiData?.comment_count || apiData?.statistics?.comment_count || 0,
-                    shares: apiData?.share_count || apiData?.statistics?.share_count || 0,
+                    plays: apiData.play_count || 0,
+                    likes: apiData.digg_count || 0,
+                    comments: apiData.comment_count || 0,
+                    shares: apiData.share_count || 0,
                 },
-                description: apiData?.title || apiData?.desc || '',
+                description: apiData.title || '',
             }
         };
 
@@ -99,21 +98,9 @@ module.exports = async function handler(req, res) {
 
     } catch (error) {
         console.error('Error downloading TikTok video:', error.message);
-        console.error('Error stack:', error.stack);
-
-        if (error.response) {
-            console.error('API Error details:', error.response.data);
-            return res.status(error.response.status).json({
-                error: 'API Error',
-                message: error.response.data?.message || error.response.data?.error || 'Failed to fetch video data from TikTok',
-                details: error.response.data
-            });
-        }
-
         res.status(500).json({
             error: 'Server Error',
-            message: error.message || 'An error occurred while processing your request',
-            stack: process.env.NODE_ENV === 'development' ? error.stack : undefined
+            message: error.message || 'An error occurred while processing your request'
         });
     }
 };

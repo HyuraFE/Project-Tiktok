@@ -16,18 +16,18 @@ export default function Home() {
             setUrl(text);
             setError('');
         } catch {
-            setError('Clipboard access blocked. Paste link manually.');
+            setError('Clipboard permission blocked. Paste manually.');
         }
     };
 
     const handleDownload = async () => {
         const trimmedUrl = url.trim();
         if (!trimmedUrl) {
-            setError('Paste a TikTok URL first');
+            setError('Please enter or paste a TikTok URL');
             return;
         }
         if (!/^https?:\/\/(?:www\.)?(?:tiktok\.com|vm\.tiktok\.com|vt\.tiktok\.com)\//i.test(trimmedUrl)) {
-            setError('Enter a valid TikTok URL');
+            setError('Invalid TikTok URL format detected');
             return;
         }
 
@@ -35,23 +35,22 @@ export default function Home() {
         setError('');
 
         try {
-            const data = await downloadTikTokVideo(url);
+            const data = await downloadTikTokVideo(trimmedUrl);
             console.log('Video data received:', data);
 
             if (data.success) {
-                // Navigate to preview with video data and URL
                 navigate('/preview', {
                     state: {
                         videoData: data.data,
-                        url: url
+                        url: trimmedUrl
                     }
                 });
             } else {
-                setError(data.message || 'Failed to fetch video data');
+                setError(data.message || 'TikWM pipeline returned error');
             }
         } catch (err) {
             console.error('Download error:', err);
-            setError(err.message || 'Failed to download video. Please check the URL and try again.');
+            setError(err.message || 'Stream fetch failure. Check URL and try again.');
         } finally {
             setLoading(false);
         }
@@ -64,75 +63,99 @@ export default function Home() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col bg-black text-white selection:bg-cyan-400 selection:text-black">
             <Header />
 
-            <main className="flex-1 flex flex-col px-6 justify-center max-w-md mx-auto w-full -mt-12">
-                {/* Hero Section */}
-                <div className="text-center space-y-4 mb-10">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface border border-border text-neutral-300 text-xs font-semibold mb-2">
-                        <span className="material-symbols-outlined text-sm">verified</span>
-                        NO WATERMARK • HD QUALITY
-                    </div>
-                    <h1 className="text-4xl sm:text-5xl font-extrabold leading-tight tracking-tight font-display text-white">
-                        Download TikTok <br />
-                        <span className="font-normal">Videos Instantly</span>
+            <main className="flex-1 flex flex-col justify-center max-w-xl mx-auto w-full px-6 py-12">
+                {/* Status Bar Tag */}
+                <div className="flex items-center gap-2 mb-6">
+                    <span className="bg-zinc-900 border border-zinc-800 text-[11px] font-mono px-3 py-1 text-cyan-400 uppercase tracking-widest flex items-center gap-2">
+                        <span className="w-1.5 h-1.5 bg-cyan-400 rounded-full animate-ping"></span>
+                        TIKWM_API_v2 // RAW_HD
+                    </span>
+                    <span className="text-[11px] font-mono text-zinc-600">// NO_WATERMARK</span>
+                </div>
+
+                {/* Hero Title */}
+                <div className="mb-10 space-y-3">
+                    <h1 className="text-4xl sm:text-5xl font-black font-mono tracking-tight uppercase leading-none">
+                        STREAM <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-pink-500">RIPPER</span>
                     </h1>
-                    <p className="text-neutral-500 text-sm px-4 max-w-xs mx-auto">
-                        Save TikTok videos in original HD quality without watermarks.
+                    <p className="text-zinc-400 font-mono text-xs sm:text-sm max-w-md">
+                        Direct video stream extractor for TikTok. Extracts 1080p MP4 and raw audio bitstream without watermark.
                     </p>
                 </div>
 
-                {/* Input Area */}
+                {/* Terminal Input Box */}
                 <div className="space-y-4">
-                    <div className="relative group">
-                        <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none text-neutral-600 group-focus-within:text-white transition-colors">
-                            <span className="material-symbols-outlined">link</span>
+                    <div className="bg-zinc-950 border-2 border-zinc-800 focus-within:border-cyan-400 p-2 shadow-[4px_4px_0px_#27272a] focus-within:shadow-[4px_4px_0px_#00f2fe] transition-all">
+                        <div className="flex items-center justify-between px-2 pb-2 text-[10px] font-mono text-zinc-500 border-b border-zinc-900">
+                            <span>TARGET_URL_INPUT</span>
+                            <span>[UTF-8]</span>
                         </div>
-                        <input
-                            className="w-full h-16 pl-12 pr-16 bg-surface border border-border rounded-2xl focus:ring-2 focus:ring-white focus:border-transparent text-base placeholder:text-neutral-500 transition-all"
-                            placeholder="Paste TikTok link here..."
-                            type="text"
-                            value={url}
-                            onChange={(e) => setUrl(e.target.value)}
-                            onKeyPress={handleKeyPress}
-                            disabled={loading}
-                        />
-                        <button
-                            type="button"
-                            onClick={handlePaste}
-                            disabled={loading}
-                            className="absolute inset-y-0 right-0 pr-4 flex items-center text-neutral-600 hover:text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                            aria-label="Paste from clipboard"
-                        >
-                            <span className="material-symbols-outlined text-lg">content_paste</span>
-                        </button>
+                        <div className="flex items-center gap-2 pt-2">
+                            <span className="text-cyan-400 font-mono pl-2 text-sm">&gt;</span>
+                            <input
+                                className="w-full bg-transparent border-none text-white font-mono text-sm placeholder:text-zinc-700 focus:outline-none focus:ring-0 py-2"
+                                placeholder="https://www.tiktok.com/@user/video/..."
+                                type="text"
+                                value={url}
+                                onChange={(e) => setUrl(e.target.value)}
+                                onKeyPress={handleKeyPress}
+                                disabled={loading}
+                            />
+                            <button
+                                type="button"
+                                onClick={handlePaste}
+                                disabled={loading}
+                                className="bg-zinc-900 hover:bg-zinc-800 text-zinc-300 border border-zinc-700 px-3 py-1.5 text-xs font-mono transition-colors uppercase disabled:opacity-50"
+                            >
+                                Paste
+                            </button>
+                        </div>
                     </div>
 
                     {error && (
-                        <div className="text-neutral-400 text-sm text-center bg-neutral-900/50 border border-border py-2 px-4 rounded-lg flex items-center justify-center gap-2">
-                            <span className="material-symbols-outlined text-base">error_outline</span>
-                            {error}
+                        <div className="bg-red-950/40 border-2 border-red-500/50 text-red-400 px-4 py-2 text-xs font-mono flex items-center gap-2 shadow-[2px_2px_0px_#ef4444]">
+                            <span className="material-symbols-outlined text-sm">terminal</span>
+                            <span>ERR: {error}</span>
                         </div>
                     )}
 
+                    {/* Submit Action Button */}
                     <button
-                        className="w-full h-16 bg-white text-black font-bold text-lg rounded-2xl flex items-center justify-center gap-2 transition-transform active:scale-95 hover:bg-neutral-200 disabled:opacity-50 disabled:cursor-not-allowed"
+                        className="w-full bg-cyan-400 hover:bg-cyan-300 text-black font-black font-mono text-base py-4 border-2 border-cyan-300 shadow-[4px_4px_0px_#fe0979] active:translate-x-1 active:translate-y-1 active:shadow-none transition-all flex items-center justify-center gap-3 uppercase disabled:opacity-50 disabled:cursor-not-allowed"
                         onClick={handleDownload}
                         disabled={loading}
                     >
                         {loading ? (
                             <>
-                                <span className="material-symbols-outlined animate-spin">progress_activity</span>
-                                Processing...
+                                <span className="material-symbols-outlined animate-spin text-xl">sync</span>
+                                PARSING_TIKWM_STREAM...
                             </>
                         ) : (
                             <>
-                                <span className="material-symbols-outlined">download</span>
-                                Download Now
+                                <span className="material-symbols-outlined text-xl">bolt</span>
+                                EXECUTE_EXTRACT
                             </>
                         )}
                     </button>
+                </div>
+
+                {/* Specs footer info */}
+                <div className="mt-12 grid grid-cols-3 gap-2 border-t-2 border-zinc-900 pt-6 text-[10px] font-mono text-zinc-500">
+                    <div>
+                        <span className="block text-zinc-400 font-bold">SOURCE</span>
+                        TikWM Public API
+                    </div>
+                    <div>
+                        <span className="block text-zinc-400 font-bold">FORMAT</span>
+                        MP4 (Original HD)
+                    </div>
+                    <div>
+                        <span className="block text-zinc-400 font-bold">AUDIO</span>
+                        Direct MP3 Stream
+                    </div>
                 </div>
             </main>
 

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TikSave - Direction 1: Minimalist Studio</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    body { font-family: 'Plus Jakarta Sans', sans-serif; background: #090a0f; color: #f1f5f9; }
+    .mono { font-family: 'JetBrains Mono', monospace; }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-rose-500 selection:text-white">
+
+  <!-- Header -->
+  <header class="border-b border-slate-800/80 px-6 py-4 flex items-center justify-between backdrop-blur-md sticky top-0 z-50 bg-[#090a0f]/80">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-cyan-400 to-rose-500 flex items-center justify-center font-black text-black text-sm">
+        TK
+      </div>
+      <span class="font-bold tracking-tight text-lg text-white">TikSave</span>
+      <span class="text-xs px-2 py-0.5 rounded border border-slate-700 text-slate-400 mono">v2.0 · TikWM</span>
+    </div>
+    <div class="flex items-center gap-4 text-xs font-medium text-slate-400">
+      <span class="flex items-center gap-1.5"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> API Online</span>
+      <span class="border-l border-slate-800 pl-4 text-slate-300">Fast & Free</span>
+    </div>
+  </header>
+
+  <!-- Hero & Main Box -->
+  <main class="max-w-3xl mx-auto px-6 py-16 w-full flex-1 flex flex-col justify-center">
+    <div class="text-center mb-10">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-900 border border-slate-800 text-slate-400 text-xs mb-4 mono">
+        Direct Original Stream · No Watermark
+      </div>
+      <h1 class="text-4xl md:text-5xl font-extrabold tracking-tight text-white mb-4">
+        Unduh Video TikTok <span class="bg-gradient-to-r from-cyan-400 to-rose-400 bg-clip-text text-transparent">Kualitas HD</span>
+      </h1>
+      <p class="text-slate-400 text-base max-w-xl mx-auto">
+        Simpan video TikTok tanpa watermark dan ekstrak audio MP3 original secara instan tanpa limit.
+      </p>
+    </div>
+
+    <!-- Input Box -->
+    <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-2.5 shadow-2xl backdrop-blur-sm focus-within:border-cyan-500/50 transition">
+      <div class="flex flex-col sm:flex-row items-center gap-2">
+        <div class="relative w-full">
+          <input 
+            type="text" 
+            placeholder="Tempel tautan TikTok di sini (contoh: https://vt.tiktok.com/...)" 
+            class="w-full bg-transparent px-4 py-3.5 text-sm text-white placeholder-slate-500 focus:outline-none"
+            value="https://www.tiktok.com/@tiktok/video/7106594312292453678"
+          />
+        </div>
+        <button class="w-full sm:w-auto px-7 py-3.5 rounded-xl bg-gradient-to-r from-cyan-400 via-teal-300 to-rose-400 font-bold text-slate-950 text-sm hover:opacity-95 transition shadow-lg shrink-0">
+          Unduh Sekarang
+        </button>
+      </div>
+    </div>
+
+    <!-- Result Card Preview -->
+    <div class="mt-8 bg-slate-900/60 border border-slate-800/80 rounded-2xl p-6">
+      <div class="flex flex-col md:flex-row gap-6">
+        <div class="w-full md:w-48 h-64 rounded-xl overflow-hidden bg-slate-950 border border-slate-800 relative shrink-0 flex items-center justify-center">
+          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
+          <span class="text-xs text-slate-500 mono z-20">Preview Thumbnail</span>
+          <span class="absolute bottom-3 left-3 text-[11px] mono bg-black/60 px-2 py-0.5 rounded text-white z-20">HD 1080p</span>
+        </div>
+        <div class="flex-1 flex flex-col justify-between">
+          <div>
+            <div class="flex items-center gap-2 mb-2">
+              <span class="text-xs font-semibold text-cyan-400">@creator_tiktok</span>
+              <span class="text-xs text-slate-600">·</span>
+              <span class="text-xs text-slate-400">2.4M Plays</span>
+            </div>
+            <p class="text-sm text-slate-300 line-clamp-2 mb-4 leading-relaxed">
+              Ini adalah contoh deskripsi video TikTok yang diambil langsung menggunakan TikWM API.
+            </p>
+          </div>
+          
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-2.5 pt-4 border-t border-slate-800/60">
+            <button class="px-3.5 py-2.5 rounded-lg bg-cyan-500/10 hover:bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 text-xs font-semibold transition text-center">
+              Video HD (No WM)
+            </button>
+            <button class="px-3.5 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-750 text-slate-300 border border-slate-700 text-xs font-medium transition text-center">
+              Normal (SD)
+            </button>
+            <button class="px-3.5 py-2.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-300 border border-rose-500/30 text-xs font-semibold transition text-center">
+              Audio MP3
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="border-t border-slate-900 py-6 text-center text-xs text-slate-500">
+    TikSave Project · Powered by TikWM Public Engine
+  </footer>
+
+</body>
+</html>

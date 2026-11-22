@@ -7,15 +7,19 @@
 }
 
 body {
-  font-family: 'DM Sans', sans-serif;
+  font-family: 'Space Grotesk', sans-serif;
   min-height: 100dvh;
-  background-color: #080808;
+  background-color: #000000;
   color: #ededed;
   -webkit-font-smoothing: antialiased;
 }
 
+.mono {
+  font-family: 'Space Mono', monospace;
+}
+
 ::selection {
-  background: #ffffff;
+  background: #00f2fe;
   color: #000000;
 }
 

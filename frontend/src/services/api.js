@@ -7,13 +7,10 @@ const getApiUrl = () => {
         return import.meta.env.VITE_API_URL;
     }
 
-    // 2. If in production (Vercel), use relative path (same domain)
-    if (import.meta.env.PROD) {
-        return '/api';
-    }
-
-    // 3. Default to localhost for development
-    return 'http://localhost:5000/api';
+    // 2. Always use relative path so browser requests go to the current host/port
+    // In dev mode, Vite proxy will forward /api to http://localhost:5000
+    // In production (Vercel), Vercel serverless /api will handle it
+    return '/api';
 };
 
 const API_BASE_URL = getApiUrl();

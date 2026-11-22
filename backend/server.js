@@ -13,12 +13,13 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
+// Routes (support both /api/tiktok/download and /api/tiktok-download)
 app.use('/api/tiktok', tiktokRoutes);
+app.use('/api', tiktokRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => {
-  res.json({ status: 'OK', message: 'TikTok Downloader API is running' });
+  res.json({ status: 'OK', message: 'TikTok Downloader API is running with TikWM Engine' });
 });
 
 // Error handling middleware
@@ -32,5 +33,5 @@ app.use((err, req, res, next) => {
 
 app.listen(PORT, () => {
   console.log(`🚀 Server is running on http://localhost:${PORT}`);
-  console.log(`📡 API endpoint: http://localhost:${PORT}/api/tiktok/download`);
+  console.log(`📡 API endpoint: http://localhost:${PORT}/api/tiktok-download`);
 });
